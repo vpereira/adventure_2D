@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
     private bool wallSliding = false;
+    private bool wallJumping = false;
 
     [SerializeField] private LayerMask jumpableGround;
 
@@ -18,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float wallSlidingSpeed = -2f; //it must be negative since we are applying it downwards
     [SerializeField] private float coyoteTimeCounter;
+    [SerializeField] private float xWallForce;
+    [SerializeField] private float yWallForce;
+    [SerializeField] private float wallJumpTime;
 
 
     private enum MovementState { idle, running, jumping, falling }
@@ -70,7 +74,24 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallSlidingSpeed, float.MaxValue));
         }
 
+        if(Input.GetButtonDown("Jump") && wallSliding)
+        {
+            wallJumping = true;
+            Invoke("resetWallJumping", wallJumpTime);
+
+        }
+
+        if(wallJumping)
+        {
+            rb.velocity = new Vector2(xWallForce * -dirX, yWallForce);
+        }
+
         UpdateAnimationState();
+    }
+
+    private void resetWallJumping()
+    {
+        wallJumping = false;
     }
 
     private void UpdateAnimationState()
