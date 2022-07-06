@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
+    private bool wallSliding = false;
 
     [SerializeField] private LayerMask jumpableGround;
 
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
     [SerializeField] private float coyoteTime = 0.2f;
+    [SerializeField] private float wallSlidingSpeed = -2f; //it must be negative since we are applying it downwards
     [SerializeField] private float coyoteTimeCounter;
 
 
@@ -58,6 +60,16 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter = 0f;
         }
 
+        if (hitWall() && !IsGrounded() && dirX != 0)
+            wallSliding = true;
+        else
+            wallSliding = false;
+
+        if(wallSliding)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallSlidingSpeed, float.MaxValue));
+        }
+
         UpdateAnimationState();
     }
 
@@ -91,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.falling;
         }
 
+
         anim.SetInteger("state", (int)state);
     }
 
@@ -102,5 +115,10 @@ public class PlayerMovement : MonoBehaviour
     private void createDust()
     {
         dust.Play();
+    }
+
+    private bool hitWall()
+    {
+        return Physics2D.Raycast(transform.position, transform.right, .5f, jumpableGround);
     }
 }
