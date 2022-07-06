@@ -74,14 +74,14 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallSlidingSpeed, float.MaxValue));
         }
 
-        if(Input.GetButtonDown("Jump") && wallSliding)
+        if (Input.GetButtonDown("Jump") && wallSliding)
         {
             wallJumping = true;
             Invoke("resetWallJumping", wallJumpTime);
 
         }
 
-        if(wallJumping)
+        if (wallJumping)
         {
             rb.velocity = new Vector2(xWallForce * -dirX, yWallForce);
         }
