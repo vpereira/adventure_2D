@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private AudioSource jumpSoundEffect;
 
+    [SerializeField] private ParticleSystem dust;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && coyoteTimeCounter > 0f)
         {
+            createDust();
             jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
@@ -66,11 +69,13 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.running;
             sprite.flipX = false;
+            createDust();
         }
         else if (dirX < 0f)
         {
             state = MovementState.running;
             sprite.flipX = true;
+            createDust();
         }
         else
         {
@@ -92,5 +97,10 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
+    }
+
+    private void createDust()
+    {
+        dust.Play();
     }
 }
