@@ -12,17 +12,17 @@ public class Trampoline : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player")
         {
             collision.gameObject.transform.SetParent(transform);
             collision.gameObject.GetComponent<Rigidbody2D>().velocity = (Vector2.up * jumpForce);
             animator.SetTrigger("jump");
-        } 
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-         if(collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player")
         {
             collision.gameObject.transform.SetParent(null);
         }

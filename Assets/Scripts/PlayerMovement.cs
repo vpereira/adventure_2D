@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Just add support for short jumps. 
-        if(Input.GetButtonUp("Jump") && rb.velocity.y > 0)
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             coyoteTimeCounter = 0f;
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         else
             wallSliding = false;
 
-        if(wallSliding)
+        if (wallSliding)
         {
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallSlidingSpeed, float.MaxValue));
         }
