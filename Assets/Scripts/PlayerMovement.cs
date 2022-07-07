@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private enum MovementState { idle, running, jumping, falling }
 
     private MovementState state;
-    
+
     [SerializeField] private AudioSource jumpSoundEffect;
 
     [SerializeField] private ParticleSystem dust;
