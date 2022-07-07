@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float xWallForce;
     [SerializeField] private float yWallForce;
     [SerializeField] private float wallJumpTime;
+    [SerializeField] private float jumpBufferTime;
+    [SerializeField] private float jumpBufferCounter;
 
 
     private enum MovementState { idle, running, jumping, falling }
@@ -50,11 +52,17 @@ public class PlayerMovement : MonoBehaviour
         else
             coyoteTimeCounter -= Time.deltaTime;
 
-        if (Input.GetButtonDown("Jump") && coyoteTimeCounter > 0f)
+        if (Input.GetButtonDown("Jump"))
+            jumpBufferCounter = jumpBufferTime;
+        else
+            jumpBufferCounter -= Time.deltaTime;
+
+        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             createDust();
             jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpBufferCounter = 0;
         }
 
         // Just add support for short jumps. 
