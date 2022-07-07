@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
     private enum MovementState { idle, running, jumping, falling }
 
+    private MovementState state;
+    
     [SerializeField] private AudioSource jumpSoundEffect;
 
     [SerializeField] private ParticleSystem dust;
@@ -45,7 +47,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         dirX = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+
+        run(dirX);
 
         if (IsGrounded())
             coyoteTimeCounter = coyoteTime;
@@ -59,42 +62,65 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
-            createDust();
             jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpBufferCounter = 0;
         }
 
         // Just add support for short jumps. 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0)
+        if (jumpBufferCounter > 0f && rb.velocity.y > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             coyoteTimeCounter = 0f;
         }
 
-        if (hitWall() && !IsGrounded() && dirX != 0)
-            wallSliding = true;
-        else
-            wallSliding = false;
+        wallSliding = IsWallSliding(dirX);
 
         if (wallSliding)
         {
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallSlidingSpeed, float.MaxValue));
+            setWallSlidingSpeed();
         }
 
-        if (Input.GetButtonDown("Jump") && wallSliding)
+        if (jumpBufferCounter > 0f && wallSliding)
         {
-            wallJumping = true;
-            Invoke("resetWallJumping", wallJumpTime);
-
+            setJumpTime();
         }
 
         if (wallJumping)
         {
-            rb.velocity = new Vector2(xWallForce * -dirX, yWallForce);
+            setWallJumpingVelocity(dirX);
         }
 
         UpdateAnimationState();
+        PlayDust();
+    }
+
+    private void run(float dirX)
+    {
+        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+    }
+
+    private bool IsWallSliding(float dirX)
+    {
+        return (hitWall() && !IsGrounded() && dirX != 0);
+    }
+
+    private void setWallSlidingSpeed()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallSlidingSpeed, float.MaxValue));
+    }
+
+    private void setJumpTime()
+    {
+        wallJumping = true;
+        // Player is just possible to wall jump withing the defined wallJumpTime
+        Invoke("resetWallJumping", wallJumpTime);
+    }
+
+    private void setWallJumpingVelocity(float dirX)
+    {
+        // apply xWallForce * inverted direction, to jump in another direction in X axis
+        rb.velocity = new Vector2(xWallForce * -dirX, yWallForce);
     }
 
     private void resetWallJumping()
@@ -104,19 +130,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateAnimationState()
     {
-        MovementState state;
 
         if (dirX > 0f)
         {
             state = MovementState.running;
             sprite.flipX = false;
-            createDust();
         }
         else if (dirX < 0f)
         {
             state = MovementState.running;
             sprite.flipX = true;
-            createDust();
         }
         else
         {
@@ -146,6 +169,11 @@ public class PlayerMovement : MonoBehaviour
         dust.Play();
     }
 
+    private void PlayDust()
+    {
+        if (state == MovementState.running || state == MovementState.jumping)
+            createDust();
+    }
     private bool hitWall()
     {
         return Physics2D.Raycast(transform.position, transform.right, .5f, jumpableGround);
