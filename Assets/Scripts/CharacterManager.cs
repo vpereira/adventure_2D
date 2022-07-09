@@ -17,10 +17,11 @@ public class CharacterManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!PlayerPrefs.HasKey("selectedOption"))
+        if (!PlayerPrefs.HasKey("selectedOption"))
         {
             selectedOption = 0;
-        } else
+        }
+        else
         {
             Load();
         }
@@ -30,7 +31,7 @@ public class CharacterManager : MonoBehaviour
     public void NextOption()
     {
         selectedOption++;
-        if(selectedOption >= characterDB.CharacterCount)
+        if (selectedOption >= characterDB.CharacterCount)
         {
             selectedOption = 0;
         }
@@ -42,7 +43,7 @@ public class CharacterManager : MonoBehaviour
     public void BackOption()
     {
         selectedOption--;
-        if(selectedOption < 0)
+        if (selectedOption < 0)
         {
             selectedOption = characterDB.CharacterCount - 1;
         }

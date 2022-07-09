@@ -20,5 +20,5 @@ public class CharacterDatabase : ScriptableObject
     {
         return character[index];
     }
-    
+
 }
