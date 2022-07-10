@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     {
         dirX = Input.GetAxisRaw("Horizontal");
 
-       wallSliding = IsWallSliding(dirX);
+        wallSliding = IsWallSliding(dirX);
 
         if (wallSliding)
         {
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // To avoid to try to run while wallSliding
             run(dirX);
-        }    
+        }
 
         if (IsGrounded())
             coyoteTimeCounter = coyoteTime;
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter = 0f;
         }
 
-        
+
 
         if (jumpBufferCounter > 0f && wallSliding)
         {
