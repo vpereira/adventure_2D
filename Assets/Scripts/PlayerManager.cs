@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
@@ -23,11 +23,12 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
         }
 
-        Vector3 spawnPosition = new Vector3(-68, 9, 0);
-        Player = Instantiate(prefabs[0], spawnPosition, Quaternion.identity);
+        Player = Instantiate(prefabs[0], getSpawnPosition(), Quaternion.identity);
         Player.name = "Player";
-        
     }
 
     private Vector3 getSpawnPosition()
+    {
+        return GameObject.Find("SpawnPosition").transform.position;
+    }
 }
