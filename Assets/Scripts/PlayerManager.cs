@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
         }
 
-        Player = Instantiate(prefabs[0], getSpawnPosition(), Quaternion.identity);
+        Player = Instantiate(prefabs[1], getSpawnPosition(), Quaternion.identity);
         Player.name = "Player";
     }
 
