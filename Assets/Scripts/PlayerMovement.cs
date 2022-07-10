@@ -48,7 +48,17 @@ public class PlayerMovement : MonoBehaviour
     {
         dirX = Input.GetAxisRaw("Horizontal");
 
-        run(dirX);
+       wallSliding = IsWallSliding(dirX);
+
+        if (wallSliding)
+        {
+            setWallSlidingSpeed();
+        }
+        else
+        {
+            // To avoid to try to run while wallSliding
+            run(dirX);
+        }    
 
         if (IsGrounded())
             coyoteTimeCounter = coyoteTime;
@@ -74,12 +84,7 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter = 0f;
         }
 
-        wallSliding = IsWallSliding(dirX);
-
-        if (wallSliding)
-        {
-            setWallSlidingSpeed();
-        }
+        
 
         if (jumpBufferCounter > 0f && wallSliding)
         {
@@ -92,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         UpdateAnimationState();
-        PlayDust();
+        playDust();
     }
 
     private void run(float dirX)
@@ -102,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsWallSliding(float dirX)
     {
-        return (hitWall() && !IsGrounded() && dirX != 0);
+        return (IsHittingWall() && !IsGrounded() && dirX != 0);
     }
 
     private void setWallSlidingSpeed()
@@ -169,12 +174,12 @@ public class PlayerMovement : MonoBehaviour
         dust.Play();
     }
 
-    private void PlayDust()
+    private void playDust()
     {
         if (state == MovementState.running || state == MovementState.jumping)
             createDust();
     }
-    private bool hitWall()
+    private bool IsHittingWall()
     {
         return Physics2D.Raycast(transform.position, transform.right, .5f, jumpableGround);
     }
