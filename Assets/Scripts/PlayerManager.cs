@@ -23,7 +23,10 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
         }
 
-        Player = Instantiate(prefabs[2], getSpawnPosition(), Quaternion.identity);
+        
+        var selectedOption = PlayerPrefs.GetInt("selectedOption", 0);
+        Debug.Log(selectedOption);
+        Player = Instantiate(prefabs[selectedOption], getSpawnPosition(), Quaternion.identity);
         Player.name = "Player";
     }
 
