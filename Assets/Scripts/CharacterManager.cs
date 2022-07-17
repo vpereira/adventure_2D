@@ -35,9 +35,6 @@ public class CharacterManager : MonoBehaviour
         {
             selectedOption = 0;
         }
-
-        Debug.Log(selectedOption);
-
         UpdateCharacter(selectedOption);
         Save();
     }
