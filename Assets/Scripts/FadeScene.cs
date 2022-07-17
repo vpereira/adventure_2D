@@ -29,7 +29,7 @@ public class FadeScene : MonoBehaviour
         cv.alpha = Mathf.Lerp(minAlpha, maxAlpha, t);
         t += 0.2f * Time.deltaTime;
 
-        if(t > 1.0)
+        if (t > 1.0)
         {
             t = 0.0f;
             maxAlpha = 0;

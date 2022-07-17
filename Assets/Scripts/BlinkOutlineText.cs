@@ -21,11 +21,11 @@ public class BlinkOutlineText : MonoBehaviour
     {
         targetTime -= Time.deltaTime;
 
-        if(targetTime <= 0f)
+        if (targetTime <= 0f)
         {
 
             var outlines = GetComponents<Outline>();
-            foreach(Outline outline in outlines)
+            foreach (Outline outline in outlines)
             {
                 outline.enabled = !outline.enabled;
                 targetTime = defaultTargetTime;
