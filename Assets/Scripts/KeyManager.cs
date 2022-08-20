@@ -38,7 +38,7 @@ public class KeyManager : MonoBehaviour
     {
         PlayerManager.Instance.Player.GetComponent<KeyCollector>().AddKey();
     }
-    
+
     public void UpdateKeysUI()
     {
         keysText.text = GetKeysString();

@@ -13,7 +13,7 @@ public class Goal : MonoBehaviour
 
     private void Awake()
     {
-        
+
         _km = GameObject.Find("KeyManager").GetComponent<KeyManager>();
     }
     private void OnTriggerEnter2D(Collider2D collision)

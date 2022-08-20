@@ -9,7 +9,7 @@ public class KeyCollector : MonoBehaviour
     private int _keys = 0;
 
     // Start is called before the first frame update
-        // TODO it could be a setter
+    // TODO it could be a setter
     public void AddKey()
     {
         _keys++;
