@@ -5,30 +5,33 @@ using UnityEngine;
 public class KeyCollector : MonoBehaviour
 {
 
-    // it will be set per level
-    // use a KeyManager for that
-    const int TOTAL_KEYS = 1;
 
+    // TODO
+    // code from itecomllector, key and numberOfKeys could be extract to one keymanager
+    private int _numOfKeysScene;
     private int _keys = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        var nOfK = GameObject.Find("NumberOfKeys").GetComponent<NumberOfKeys>();
+        _numOfKeysScene = nOfK.NumberOfKeysOnTheScene();
     }
     public bool AreAllKeysFound()
     {
-        return _keys == TOTAL_KEYS;
+        return _keys == _numOfKeysScene;
     }
 
+
+    // TODO it could be a setter
     public void IncreaseKeysCount()
     {
         _keys += 1;
+    }
+
+    // TODO transform it in a property
+    public int Keys()
+    {
+        return _keys;
     }
 }
