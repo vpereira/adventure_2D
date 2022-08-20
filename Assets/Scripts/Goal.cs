@@ -9,8 +9,16 @@ public class Goal : MonoBehaviour
     Canvas youWon;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        youWon.GetComponent<Canvas>().enabled = true;
-        var player = GameObject.Find("Player");
-        player.SetActive(false);
+        if(collision.CompareTag("Player"))
+        {
+            var player = GameObject.Find("Player");
+            // TODO
+            // We have to control if the door is open or close
+            if(player.GetComponent<KeyCollector>().AreAllKeysFound())
+            {
+                youWon.GetComponent<Canvas>().enabled = true;
+                player.SetActive(false);
+            }
+        }
     }
 }

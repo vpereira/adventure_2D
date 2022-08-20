@@ -9,6 +9,7 @@ public class Key : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject, 0.1f);
+            collision.GetComponent<KeyCollector>().IncreaseKeysCount();
         }
     }
 }
