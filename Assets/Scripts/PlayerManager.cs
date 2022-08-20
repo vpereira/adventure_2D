@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     private GameObject[] prefabs;
 
     public GameObject Player { get; private set; }
+
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -27,6 +28,8 @@ public class PlayerManager : MonoBehaviour
         var selectedOption = PlayerPrefs.GetInt("selectedOption", 0);
         Player = Instantiate(prefabs[selectedOption], getSpawnPosition(), Quaternion.identity);
         Player.name = "Player";
+
+
     }
 
     private Vector3 getSpawnPosition()

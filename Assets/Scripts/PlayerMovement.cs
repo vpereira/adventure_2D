@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
             jumpBufferCounter = 0;
         }
 
+        // TODO
         // Just add support for short jumps. 
         if (jumpBufferCounter > 0f && rb.velocity.y > 0)
         {

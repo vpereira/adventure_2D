@@ -6,34 +6,22 @@ using UnityEngine.UI;
 public class Key : MonoBehaviour
 {
 
-    [SerializeField] private Text keysText;
-    [SerializeField] private AudioSource collectionSoundEffect;
+
+    KeyManager _km;
 
     private void Awake()
     {
-        keysText = getKeysText();
+        _km = GameObject.Find("KeyManager").GetComponent<KeyManager>();
     }
-
-    private Text getKeysText()
-    {
-        return GameObject.FindGameObjectWithTag("KeysText").GetComponent<Text>();
-    }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject, 0.1f);
-            collision.GetComponent<KeyCollector>().IncreaseKeysCount();
-            keysText.text = getTotalKeysText();
+            _km.AddKey();
+            _km.UpdateKeysUI();
+            _km.PlaySound();
         }
-    }
-
-    private string getTotalKeysText()
-    {
-        var totalKeys = GameObject.Find("NumberOfKeys").GetComponent<NumberOfKeys>().NumberOfKeysOnTheScene();
-        var playerKeys = GameObject.Find("Player").GetComponent<KeyCollector>().Keys();
-        return $"KEYS: {playerKeys}/{totalKeys}";
     }
 }

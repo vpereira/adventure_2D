@@ -7,18 +7,24 @@ public class Goal : MonoBehaviour
 {
     [SerializeField]
     Canvas youWon;
+
+
+    KeyManager _km;
+
+    private void Awake()
+    {
+        
+        _km = GameObject.Find("KeyManager").GetComponent<KeyManager>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && _km.AreAllKeysFound())
         {
-            var player = GameObject.Find("Player");
             // TODO
             // We have to control if the door is open or close
-            if (player.GetComponent<KeyCollector>().AreAllKeysFound())
-            {
-                youWon.GetComponent<Canvas>().enabled = true;
-                player.SetActive(false);
-            }
+            // We shouldnt win, but move to the next level
+            youWon.GetComponent<Canvas>().enabled = true;
+            PlayerManager.Instance.Player.SetActive(false);
         }
     }
 }
