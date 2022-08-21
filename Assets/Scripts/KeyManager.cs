@@ -11,7 +11,7 @@ public class KeyManager : MonoBehaviour
     [SerializeField]
     int numberOfKeysLevel;
 
-    [SerializeField] 
+    [SerializeField]
     Text keysText;
 
     Animator doorAnimator;
@@ -58,7 +58,7 @@ public class KeyManager : MonoBehaviour
 
     public void OpenDoorIfNeeded()
     {
-        if(AreAllKeysFound() && doorAnimator.GetBool("locked"))
+        if (AreAllKeysFound() && doorAnimator.GetBool("locked"))
         {
             doorAnimator.SetBool("locked", false);
         }
