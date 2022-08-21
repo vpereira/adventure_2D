@@ -22,6 +22,7 @@ public class Key : MonoBehaviour
             _km.AddKey();
             _km.UpdateKeysUI();
             _km.PlaySound();
+            _km.OpenDoorIfNeeded();
         }
     }
 }
