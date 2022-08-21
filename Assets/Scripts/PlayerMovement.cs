@@ -67,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
             jumpBufferCounter = jumpBufferTime;
+        else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         else
             jumpBufferCounter -= Time.deltaTime;
 
@@ -74,18 +76,9 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpBufferCounter = 0;
-        }
-
-        // TODO
-        // Just add support for short jumps. 
-        if (jumpBufferCounter > 0f && rb.velocity.y > 0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            jumpBufferCounter = 0f;
             coyoteTimeCounter = 0f;
         }
-
-
 
         if (jumpBufferCounter > 0f && wallSliding)
         {
