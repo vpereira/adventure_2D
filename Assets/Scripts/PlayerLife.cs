@@ -13,14 +13,14 @@ public class PlayerLife : MonoBehaviour
     [SerializeField] private AudioSource deathSoundEffect;
 
 
-    
+
     public int NumOfLives
     {
-        get { return _lifeCounter;  }
+        get { return _lifeCounter; }
         set { _lifeCounter = value; }
     }
 
-    public void  AddLife()
+    public void AddLife()
     {
         NumOfLives++;
     }

@@ -9,13 +9,13 @@ public class PlayerLivesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateLivesUI();   
+        UpdateLivesUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void UpdateLivesUI()
