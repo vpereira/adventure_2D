@@ -8,7 +8,28 @@ public class PlayerLife : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
 
+    [SerializeField] private int _lifeCounter = 3;
+
     [SerializeField] private AudioSource deathSoundEffect;
+
+
+    
+    public int NumOfLives
+    {
+        get { return _lifeCounter;  }
+        set { _lifeCounter = value; }
+    }
+
+    public void  AddLife()
+    {
+        NumOfLives++;
+    }
+
+    public void RemoveLife()
+    {
+        if (_lifeCounter > 0)
+            NumOfLives--;
+    }
 
     private void Start()
     {
