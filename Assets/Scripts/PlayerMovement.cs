@@ -67,15 +67,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
             jumpBufferCounter = jumpBufferTime;
-        else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        else if (Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         else
             jumpBufferCounter -= Time.deltaTime;
 
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             jumpSoundEffect.Play();
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpBufferCounter = 0f;
             coyoteTimeCounter = 0f;
         }
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void run(float dirX)
     {
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(dirX * moveSpeed, rb.linearVelocity.y);
     }
 
     private bool IsWallSliding(float dirX)
@@ -106,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void setWallSlidingSpeed()
     {
-        rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallSlidingSpeed, float.MaxValue));
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, wallSlidingSpeed, float.MaxValue));
     }
 
     private void setJumpTime()
@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
     private void setWallJumpingVelocity(float dirX)
     {
         // apply xWallForce * inverted direction, to jump in another direction in X axis
-        rb.velocity = new Vector2(xWallForce * -dirX, yWallForce);
+        rb.linearVelocity = new Vector2(xWallForce * -dirX, yWallForce);
     }
 
     private void resetWallJumping()
@@ -145,11 +145,11 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.idle;
         }
 
-        if (rb.velocity.y > .1f)
+        if (rb.linearVelocity.y > .1f)
         {
             state = MovementState.jumping;
         }
-        else if (rb.velocity.y < -.1f)
+        else if (rb.linearVelocity.y < -.1f)
         {
             state = MovementState.falling;
         }

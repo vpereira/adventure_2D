@@ -15,7 +15,7 @@ public class Trampoline : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             collision.gameObject.transform.SetParent(transform);
-            collision.gameObject.GetComponent<Rigidbody2D>().velocity = (Vector2.up * jumpForce);
+            collision.gameObject.GetComponent<Rigidbody2D>().linearVelocity = (Vector2.up * jumpForce);
             animator.SetTrigger("jump");
         }
     }
